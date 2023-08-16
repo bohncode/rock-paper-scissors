@@ -2,6 +2,27 @@
 
 let playerScore = 0
 let compScore = 0
+const rockButton = document.querySelector("#rock")
+const scissorsButton = document.querySelector("#scissors")
+const paperButton = document.querySelector("#paper")
+const compSelection = getComputerChoice()
+const outcomeDiv = document.querySelector('.outcome')
+const playerScoreSpan = document.querySelector('.player-score')
+const compScoreSpan = document.querySelector('.comp-score')
+const checkForWinner = (playerScore, compScore) => {
+    if(playerScore === 5) {
+        const h2 = document.createElement('h2')
+        h2.classList.add('player-won')
+        h2.innerText = `You won ${playerScore} to ${compScore}! The indomidable human mind shall never be surpassed by the computer`
+        outcomeDiv.appendChild(h2)
+    }
+    if(compScore == 5) {
+        const h2 = document.createElement('h2')
+        h2.classList.add('player-lost')
+        h2.innerText = `You lost ${playerScore} to ${compScore}! Feelsbadman`
+        outcomeDiv.appendChild(h2)
+    }
+}
 
 // write a function that will randomly return rock, paper, or scissors //
 
@@ -12,59 +33,88 @@ function getComputerChoice() {
     return compSelection
 }
 
-// test to see if function is randomly choosing rock, paper, or scissors //
-getComputerChoice();
+const updateScores = (playerScore, compScore) => {
+    playerScoreSpan.innerText = `Player Score:  ${playerScore}`
+    compScoreSpan.innerText = `Computer Score:   ${compScore}`
+}
 
-// write a function that plays a single round of rock paper scissors //
+rockButton.addEventListener('click', () => {
+    const compSelection = getComputerChoice()
+    const playerSelection = 'rock'
+    playRound(playerSelection, compSelection)
+    playerScore.innerText = `{playerScore}`
+    compScore.innerText = `{compScore}`
+    updateScores(playerScore, compScore)
+    checkForWinner(playerScore, compScore)
+})
 
+scissorsButton.addEventListener('click', () => {
+    const compSelection = getComputerChoice()
+    const playerSelection = 'scissors'
+    playRound(playerSelection, compSelection)
+    playerScore.innerText = `{playerScore}`
+    compScore.innerText = `{compScore}`
+    updateScores(playerScore, compScore)
+    checkForWinner(playerScore, compScore)
+})
+
+paperButton.addEventListener('click', () => {
+    const compSelection = getComputerChoice()
+    const playerSelection = 'paper'
+    playRound(playerSelection, compSelection)
+    playerScore.innerText = `{playerScore}`
+    compScore.innerText = `{compScore}`
+    updateScores(playerScore, compScore)
+    checkForWinner(playerScore, compScore)
+}
+)
 function playRound(playerSelection, compSelection) {
     if (playerSelection === 'rock' && compSelection === 'rock') {
-        return 'You both chose rock, you tied!'
+        const p = document.createElement('p')
+        p.innerText = 'You both chose rock, you tied!'
+        outcomeDiv.appendChild(p)
     } else if (playerSelection === 'scissors' && compSelection === 'scissors') {
-        return 'You both chose scissors, you tied!'
+        const p = document.createElement('p')
+        p.innerText = 'You both chose scissors, you tied!'
+        outcomeDiv.appendChild(p)
     } else if (playerSelection === 'paper' && compSelection === 'paper') {
-        return 'You both chose paper, you tied!'
+        const p = document.createElement('p')
+        p.innerText = 'You both chose paper, you tied!'
+        outcomeDiv.appendChild(p)
     } else if (playerSelection === 'rock' && compSelection === 'paper') {
         compScore++
-        return 'Paper beats rock, you lose this round!'
+        const p = document.createElement('p')
+        p.innerText = 'Paper beats rock, you lose this round!'
+        outcomeDiv.appendChild(p)
     } else if (playerSelection === 'paper' && compSelection === 'rock') {
         playerScore++
-        return 'Paper beats rock, you win this round!'
+        const p = document.createElement('p')
+        p.innerText = 'Paper beats rock, you win this round!'
+        outcomeDiv.appendChild(p)
     } else if (playerSelection === 'rock' && compSelection === 'scissors') {
         playerScore++
-        return 'Rock beats scissors, you win this round!'
+        const p = document.createElement('p')
+        p.innerText = 'Rock beats scissors, you win this round!'
+        outcomeDiv.appendChild(p)
     } else if (playerSelection === 'scissors' && compSelection === 'rock') {
         compScore++
-        return 'Rock beats scissors, you lose this round!'
+        const p = document.createElement('p')
+        p.innerText = 'Rock beats scissors, you lose this round!'
+        outcomeDiv.appendChild(p)
     } else if (playerSelection === 'paper' && compSelection === 'scissors') {
         compScore++
-        return 'Scissors beats paper, you lose this round!'
+        const p = document.createElement('p')
+        p.innerText = 'Scissors beats paper, you lose this round!'
+        outcomeDiv.appendChild(p)
     } else if (playerSelection === 'scissors' && compSelection === 'paper') {
         playerScore++
-        return 'Scissors beats paper, you win this round!'
+        const p = document.createElement('p')
+        p.innerText = 'Scissors beats paper, you win this round!'
+        outcomeDiv.appendChild(p)
     }
 }
 
-// write a function called game() and make it play a 5 round game that keeps score and reports a winner or loser at the end //
 
-function game() {
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = prompt('choose rock, paper, or scissors', 'rock, paper, scissors').toLowerCase();
-        const compSelection = getComputerChoice();
-        console.log(playRound(playerSelection, compSelection))
-    }
 
-// check who won aka reached score of 5 first //
 
-    if (playerScore > compScore) {
-        return 'You beat the computer, you are a genius'
-    } else if (playerScore < compScore) {
-        return 'You lost to the computer, sucks to suck'
-    } else {
-        return 'You tied with the computer, how is this possible?'
-    }
-}
 
-// call the function //
-
-console.log(game())
